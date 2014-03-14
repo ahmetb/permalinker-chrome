@@ -39,14 +39,12 @@ function getPermalink(info)
     if (url){
         upload(apiBaseUrl, url);
     } else {
-        alert('Permalinker: No URLs found in selection/context.');
+        alert('No URLs found in that selection/context. Try something else.');
     }
 }
 
 function upload(apiBase, sourceUrl){
     var jqxhr = $.post(apiBase + "/upload?url=" + encodeURIComponent(sourceUrl), function(data) {
-        alert(JSON.stringify(data));
-        alert(data['data']['permalink']);
         copyToClipboard(data['data']['permalink'], "text/plain");
       })
       .fail(function(data) {
@@ -60,7 +58,11 @@ function copyToClipboard(str, mimetype) {
     event.preventDefault();
   };
   document.execCommand("Copy", false, null);
-  alert('Copied to clipboard: ' + str);
+  copyToClipboardFinished(str);
+}
+
+function copyToClipboardFinished(str){
+  prompt('Link successfully copied to clipboard!', str);
 }
 
 chrome.contextMenus.create({title: "Permalink to cloud!", contexts:["image", "link", "selection"], onclick: getPermalink});
