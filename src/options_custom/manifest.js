@@ -20,11 +20,29 @@ this.manifest = {
         },
         {
             "tab": "Server",
-            "group": "API Server",
+            "group": "Login",
+            "name": "username",
+            "type": "text",
+            "label": "Server Username"
+        },
+        {
+            "tab": "Server",
+            "group": "Login",
+            "name": "password",
+            "type": "text",
+            "masked": true,
+            "label": "Server Password"
+        },
+        {
+            "tab": "Server",
+            "group": "Login",
             "name": "saveButton",
             "type": "button",
             "label": "",
             "text": "Save and Close"
         },
+    ],
+    "alignment": [
+        ["username", "password"]
     ]
 };

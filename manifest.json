@@ -1,6 +1,6 @@
 {
   "name": "Permalinker",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "manifest_version": 2,
   "description": "Right click → Save to cloud → Permalink on your clipboard.",
   "homepage_url": "http://alp.im",

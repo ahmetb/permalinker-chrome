@@ -44,11 +44,31 @@ function getPermalink(info)
 }
 
 function upload(apiBase, sourceUrl){
-    var jqxhr = $.post(apiBase + "/upload?url=" + encodeURIComponent(sourceUrl), function(data) {
+    var username = settings.get("username");
+    var password = settings.get("password");
+
+    var jqxhr = $.ajax(
+      {
+        url: apiBase + "/upload?url=" + encodeURIComponent(sourceUrl),
+        type: 'POST',
+        method: 'POST',
+        beforeSend: function(xhr){
+          if (username && password){
+            xhr.setRequestHeader("Authorization", "Basic "+ btoa(username+":"+password));
+          }
+        }
+      })
+      .done(function(data) {
         copyToClipboard(data['data']['permalink'], "text/plain");
       })
       .fail(function(data) {
-        alert("Error message: "+ data['responseJSON']['error']['message']+"\n\nError code: " + data['status']+" "+ data['statusText']);
+        var msg;
+        if ('responseJSON' in data){
+          msg = data['responseJSON']['error']['message']+"\n\nError code: " + data['status'];
+        } else {
+          msg = data['responseText'];
+        }
+        alert("Error message: "+ msg +" "+ data['statusText']);
       });
 }
 
